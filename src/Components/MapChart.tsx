@@ -3,7 +3,8 @@ import {
     ZoomableGroup,
     ComposableMap,
     Geographies,
-    Geography
+    Geography,
+    Annotation
 } from "react-simple-maps";
 import geoUrl from '../Datasets/provincesTopo.json';
 
@@ -12,7 +13,9 @@ const MapChart = ({ setTooltipContent }: { setTooltipContent: Function }) => (
             <ComposableMap data-tip="" projectionConfig={{ 
                 scale: 10000,
                 
-            }}>
+            }}
+                height={600}
+            >
                 <ZoomableGroup
                     center={[4.5, 51]}
                 >
@@ -37,6 +40,7 @@ const MapChart = ({ setTooltipContent }: { setTooltipContent: Function }) => (
                                     key={geo.rsmKey}
                                     geography={geo}
                                     onMouseEnter={() => {
+                                        console.log('🚀: props', geo.properties);
                                         setTooltipContent(`${NAME} — ${kutOfNiet}`);
                                     }}
                                     onMouseLeave={() => {
@@ -63,6 +67,34 @@ const MapChart = ({ setTooltipContent }: { setTooltipContent: Function }) => (
                             )}
                         )}
                     </Geographies>
+                    <Annotation
+                    subject={[4.72122, 51.2485]}
+                        dx={-90}
+                        dy={-30}
+                        connectorProps={{
+                            stroke: "#FF5533",
+                            strokeWidth: 3,
+                            strokeLinecap: "round"
+                        }}
+                    >
+                        <text x="-8" textAnchor="end" alignmentBaseline="middle" fill="#F53">
+                            {"Antwerpen, eigenlijk gewoon Nederlands"}
+                        </text>
+                    </Annotation>
+                    <Annotation
+                    subject={[5.41314, 50.9954]}
+                        dx={30}
+                        dy={-90}
+                        connectorProps={{
+                            stroke: "#FF5533",
+                            strokeWidth: 3,
+                            strokeLinecap: "round"
+                        }}
+                    >
+                        <text x="-8" textAnchor="end" alignmentBaseline="middle" fill="#F53">
+                            {"Limburg, Letterlijk dezelfde naam als de Nederlandse provincie"}
+                        </text>
+                    </Annotation>
                 </ZoomableGroup>
             </ComposableMap>
         </>
