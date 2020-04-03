@@ -29,22 +29,16 @@ const MapChart = ({ setTooltipContent }: { setTooltipContent: Function }) => {
                 <ZoomableGroup
                     center={[5, 50.64]}
                     onZoomStart={() => {
-                        
+
                     }}
                 >
                     <Geographies geography={geoUrl}>
-                        {({ geographies }) => {
-                                console.log('HANLO2');
-                                
-                                return geographies.map(geo => {
-                                console.log('🚀: MapChart -> geo', geo);
-
-                                return (
+                        {({ geographies }) => geographies.map(geo =>  (
                                 <Geography
                                     key={geo.rsmKey}
                                     geography={geo}
                                     onMouseEnter={() => {
-                                        const { name_nl: NAME, POP_EST } = geo.properties;
+                                        const { name_nl: NAME } = geo.properties;
                                         setTooltipContent(`${NAME} — KUT`);
                                     }}
                                     onMouseLeave={() => {
@@ -65,8 +59,8 @@ const MapChart = ({ setTooltipContent }: { setTooltipContent: Function }) => {
                                         }
                                     }}
                                 />
-                            )}
-                        )}}
+                            )
+                        )}
                     </Geographies>
                 </ZoomableGroup>
             </ComposableMap>
