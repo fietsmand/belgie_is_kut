@@ -17,55 +17,65 @@ const rounded = (num: number) => {
     }
 };
 
-const MapChart = ({ setTooltipContent }: { setTooltipContent: Function }) => {
-    console.log('HNALO');
-    
-    return (
+const MapChart = ({ setTooltipContent }: { setTooltipContent: Function }) => (
         <>
             <ComposableMap data-tip="" projectionConfig={{ 
                 scale: 10000,
                 
             }}>
                 <ZoomableGroup
-                    center={[5, 50.64]}
-                    onZoomStart={() => {
-
-                    }}
+                    center={[4.5, 51]}
                 >
                     <Geographies geography={geoUrl}>
-                        {({ geographies }) => geographies.map(geo =>  (
+                        {({ geographies }) => geographies.map(geo =>  {
+                            const { name_nl: NAME, gns_region } = geo.properties;
+
+                            let fill = "#D00";
+                            let kutOfNiet = 'KUT'
+
+                            if(gns_region === 'BE13') {
+                                fill='#005'
+                                kutOfNiet='Ja eigenlijk wel oke'
+                            }
+
+                            if(gns_region === 'NL11') {
+                                fill='#FFF'
+                            }
+
+                            return (
                                 <Geography
                                     key={geo.rsmKey}
                                     geography={geo}
                                     onMouseEnter={() => {
-                                        const { name_nl: NAME } = geo.properties;
-                                        setTooltipContent(`${NAME} — KUT`);
+                                        setTooltipContent(`${NAME} — ${kutOfNiet}`);
                                     }}
                                     onMouseLeave={() => {
-                                        setTooltipContent("");
+                                        setTooltipContent('');
                                     }}
                                     style={{
                                         default: {
-                                            fill: "#D6D6DA",
-                                            outline: "none"
+                                            fill,
+                                            outline: "#eee",
+                                            border: '1px solid #000'
                                         },
                                         hover: {
                                             fill: "#F53",
-                                            outline: "none"
+                                            outline: "#000",
+                                            border: '10px solid #000'
                                         },
                                         pressed: {
                                             fill: "#E42",
-                                            outline: "none"
+                                            outline: "none",
+
                                         }
                                     }}
                                 />
-                            )
+                            )}
                         )}
                     </Geographies>
                 </ZoomableGroup>
             </ComposableMap>
         </>
     );
-};
 
 export default memo(MapChart);
