@@ -7,8 +7,15 @@ import {
     Annotation
 } from "react-simple-maps";
 import geoUrl from '../Datasets/provincesTopo.json';
+import { getText } from '../Utils/index';
 
-const MapChart = ({ setTooltipContent }: { setTooltipContent: Function }) => (
+const MapChart = ({ 
+    setTooltipContent, 
+    language 
+}: { 
+    setTooltipContent: Function;
+    language: 'NL' | 'FR';
+}) => (
         <>
             <ComposableMap data-tip="" projectionConfig={{ 
                 scale: 10000,
@@ -24,11 +31,11 @@ const MapChart = ({ setTooltipContent }: { setTooltipContent: Function }) => (
                             const { name_nl: NAME, gns_region } = geo.properties;
 
                             let fill = "#D00";
-                            let kutOfNiet = 'KUT'
+                            let kutOfNiet = getText(language, 'KUT')
 
                             if(gns_region === 'BE13') {
                                 fill='#005'
-                                kutOfNiet='Ja eigenlijk wel oke'
+                                kutOfNiet = getText(language, 'Ja eigenlijk wel oke')
                             }
 
                             if(gns_region === 'NL11') {
@@ -41,7 +48,7 @@ const MapChart = ({ setTooltipContent }: { setTooltipContent: Function }) => (
                                     geography={geo}
                                     onMouseEnter={() => {
                                         console.log('🚀: props', geo.properties);
-                                        setTooltipContent(`${NAME} — ${kutOfNiet}`);
+                                        setTooltipContent(getText(language, `${NAME} — ${kutOfNiet}`));
                                     }}
                                     onMouseLeave={() => {
                                         setTooltipContent('');
@@ -68,9 +75,9 @@ const MapChart = ({ setTooltipContent }: { setTooltipContent: Function }) => (
                         )}
                     </Geographies>
                     <Annotation
-                    subject={[4.72122, 51.2485]}
-                        dx={-90}
-                        dy={-30}
+                        subject={[4.72122, 51.2485]}
+                        dx={-20}
+                        dy={-110}
                         connectorProps={{
                             stroke: "#FF5533",
                             strokeWidth: 3,
@@ -78,13 +85,13 @@ const MapChart = ({ setTooltipContent }: { setTooltipContent: Function }) => (
                         }}
                     >
                         <text x="-8" textAnchor="end" alignmentBaseline="middle" fill="#F53">
-                            {"Antwerpen, eigenlijk gewoon Nederlands"}
+                        {getText(language, "Antwerpen, eigenlijk gewoon Nederlands")}
                         </text>
                     </Annotation>
                     <Annotation
-                    subject={[5.41314, 50.9954]}
+                        subject={[5.41314, 50.9954]}
                         dx={30}
-                        dy={-90}
+                        dy={-200}
                         connectorProps={{
                             stroke: "#FF5533",
                             strokeWidth: 3,
@@ -92,7 +99,63 @@ const MapChart = ({ setTooltipContent }: { setTooltipContent: Function }) => (
                         }}
                     >
                         <text x="-8" textAnchor="end" alignmentBaseline="middle" fill="#F53">
-                            {"Limburg, Letterlijk dezelfde naam als de Nederlandse provincie"}
+                        {getText(language, "Limburg, Letterlijk dezelfde naam als de Nederlandse provincie")}
+                        </text>
+                    </Annotation>
+                    <Annotation
+                    subject={[4.53709, 50.8709]}
+                        dx={80}
+                        dy={-190}
+                        connectorProps={{
+                            stroke: "#FF5533",
+                            strokeWidth: 3,
+                            strokeLinecap: "round"
+                        }}
+                    >
+                        <text x="-8" textAnchor="end" alignmentBaseline="middle" fill="#F53">
+                        {getText(language, "Vlaams-Brabant, Bijna net zo goed als Noord-Brabant")}
+                        </text>
+                    </Annotation>
+                    <Annotation
+                    subject={[3.83186, 50.9749]}
+                        dx={55}
+                        dy={-120}
+                        connectorProps={{
+                            stroke: "#FF5533",
+                            strokeWidth: 3,
+                            strokeLinecap: "round"
+                        }}
+                    >
+                        <text x="-8" textAnchor="end" alignmentBaseline="middle" fill="#F53">
+                        {getText(language, "Oost Vlaanderen, Ten oosten van West-Vlaanderen")}
+                        </text>
+                    </Annotation>
+                    <Annotation
+                        subject={[3.02202, 51.0312]}
+                        dx={-25}
+                        dy={-80}
+                        connectorProps={{
+                            stroke: "#FF5533",
+                            strokeWidth: 3,
+                            strokeLinecap: "round",
+                        }}
+                    >
+                        <text x="-8" textAnchor="middle" alignmentBaseline="after-edge" fill="#F53">
+                        {getText(language, "West Vlaanderen, Ten westen van Oost-Vlaanderen")}
+                        </text>
+                    </Annotation>
+                    <Annotation
+                    subject={[4.88712, 50.3244]}
+                        dx={-35}
+                        dy={110}
+                        connectorProps={{
+                            stroke: "#FF5533",
+                            strokeWidth: 3,
+                            strokeLinecap: "round",
+                        }}
+                    >
+                        <text x="-8" textAnchor="end" alignmentBaseline="after-edge" fill="#F53">
+                        {"Wallonië - 💩"}
                         </text>
                     </Annotation>
                 </ZoomableGroup>
